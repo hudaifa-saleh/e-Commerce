@@ -1,0 +1,21 @@
+>>> from products.models import Product
+>>> queryset = Product.objects.all()
+>>> queryset
+<QuerySet [<Product: T-Shirt>, <Product: t_shirt>]>
+>>> qs = Product.objects.filter(title__contains='T-Shirt')
+>>> qs
+<QuerySet [<Product: T-Shirt>]>
+>>> qs = Product.objects.filter(title__contains='t_shirt')
+>>> qs
+<QuerySet [<Product: t_shirt>]>
+>>> qs = Product.objects.filter(description__contains='t_shirt')
+>>> qs
+<QuerySet []>
+>>> qs = Product.objects.filter(title__icontains='t_shirt')
+>>> qs
+<QuerySet [<Product: t_shirt>]>
+>>> Product.objects.get(id=1)
+<Product: T-Shirt>
+>>> Product.objects.get(id=2)
+<Product: t_shirt>
+>>> Product.objects.get(id=3)
