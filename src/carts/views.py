@@ -1,11 +1,17 @@
+from tkinter.messagebox import NO
 from django.shortcuts import render
+from carts.models import Cart, CartManager
 
 
 def cart_home(request):
     cart_id = request.session.get("cart_id", None)
-    if cart_id is None: # and isinstance(cart_id, int):
-        print("Creat new cart")
-        request.session["cart_id"] = 12
+    qs = Cart.objects.filter(id=cart_id)
+    if qs.count() == 1:
+        cart_obj = qs.first()
+        if request.user.is_authenticated and cart_obj.user is None:
+            cart_obj.user = request.user
+            cart_obj.save()
     else:
-        print("Cart ID exists")
+        cart_obj = Cart.objects.new(user=request.user)
+        request.session["cart_id"] = cart_obj.id
     return render(request, "carts/home.html", {})
