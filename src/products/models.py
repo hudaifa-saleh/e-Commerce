@@ -13,13 +13,9 @@ class ProductQuerySet(QuerySet):
 
     def featured(self):
         return self.filter(featured=True, active=True)
-    
+
     def search(self, query):
-        lookups = (Q(title__icontains=query) | 
-                  Q(description__icontains=query) |
-                  Q(price__icontains=query) |
-                  Q(tag__title__icontains=query)
-                  )
+        lookups = Q(title__icontains=query) | Q(description__icontains=query) | Q(price__icontains=query) | Q(tag__title__icontains=query)
         # tshirt, t-shirt, t shirt, red, green, blue,
         return self.filter(lookups).distinct()
 
@@ -39,7 +35,7 @@ class ProductModelManager(models.Manager):
         if qs.count() == 1:
             return qs.first()
         return None
-    
+
     def search(self, query):
         return self.get_queryset().active().search(query)
 
@@ -62,9 +58,14 @@ class Product(models.Model):
     def __unicode__(self):
         return self.title
 
+    @property
+    def name(self):
+        return self.title
+
     def get_absolute_url(self):
-        #return "/products/{slug}/".format(slug=self.slug)
+        # return "/products/{slug}/".format(slug=self.slug)
         return reverse("products:detail", kwargs={"slug": self.slug})
+
 
 ####################################################### Signals ################################################################
 def product_per_save_receiver(sender, instance, *args, **kwargs):
