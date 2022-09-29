@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from decimal import Decimal
 from products.models import Product
 from django.db.models.signals import pre_save, m2m_changed, post_save
 
@@ -22,8 +23,7 @@ class CartManager(models.Manager):
             request.session["cart_id"] = cart_obj.id
         return cart_obj, new_obj
 
-    def new(self, user=None, product=None):
-        print(user)
+    def new(self, user=None):
         user_obj = None
         if user is not None:
             if user.is_authenticated:
@@ -44,6 +44,14 @@ class Cart(models.Model):
     def __str__(self):
         return str(self.id)
 
+    @property
+    def is_digital(self):
+        qs = self.products.all() #every product
+        new_qs = qs.filter(is_digital=False) # every product that is not digial
+        if new_qs.exists():
+            return False
+        return True
+
 
 ####################################################### Signals ################################################################
 def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
@@ -52,9 +60,9 @@ def m2m_changed_cart_receiver(sender, instance, action, *args, **kwargs):
         total = 0
         for x in products:
             total += x.price
-        print(total)
-        instance.sub_total = total
-        instance.save()
+        if instance.sub_total != total:
+            instance.sub_total = total
+            instance.save()
 
 
 m2m_changed.connect(m2m_changed_cart_receiver, sender=Cart.products.through)
@@ -62,8 +70,9 @@ m2m_changed.connect(m2m_changed_cart_receiver, sender=Cart.products.through)
 
 def pre_save_cart_receiver(sender, instance, *args, **kwargs):
     if instance.sub_total > 0:
-        instance.total = instance.sub_total + 10
+        instance.total = Decimal(instance.sub_total) * Decimal(1.08)  # 8% tax
     else:
         instance.total = 0.00
+
 
 pre_save.connect(pre_save_cart_receiver, sender=Cart)
