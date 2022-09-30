@@ -12,6 +12,7 @@ urlpatterns = [
     re_path(r"^register/$", register_page),
     re_path(r"^cart/", include("carts.urls", namespace="cart")),
     re_path(r"^products/", include("products.urls", namespace="products")),
+    # re_path(r"^orders/", include("orders.urls", namespace="orders")),
     re_path(r"^search/", include("search.urls", namespace="search")),
     re_path(r"^admin/", admin.site.urls),
 ]
