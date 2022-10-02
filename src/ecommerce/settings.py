@@ -31,17 +31,20 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Django Apps
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # Developments Apps
     "products.apps.ProductsConfig",
     "search.apps.SearchConfig",
     "tags.apps.TagsConfig",
     "carts.apps.CartsConfig",
     "orders.apps.OrdersConfig",
+    "accounts.apps.AccountsConfig",
 ]
 
 MIDDLEWARE = [
@@ -128,3 +131,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn", "static_root")
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "static_my_proj", "media_root")
+
+
+LOGOUT_REDIRECT_URL = '/login/'

@@ -1,9 +1,0 @@
-{% load static %} {% block body %}
-
-<h1>Hello This a login page</h1>
-
-<form method="POST">
-  {% csrf_token %} {{ form }}
-  <button type="submit" class="btn btn-default">Submit</button>
-</form>
-{% endblock body %}
