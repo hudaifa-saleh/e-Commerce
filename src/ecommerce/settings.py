@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "carts.apps.CartsConfig",
     "orders.apps.OrdersConfig",
     "accounts.apps.AccountsConfig",
+    "billing.apps.BillingConfig",
 ]
 
 MIDDLEWARE = [
@@ -133,4 +134,4 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "static_my_proj", "media_root")
 
 
-LOGOUT_REDIRECT_URL = '/login/'
+LOGOUT_REDIRECT_URL = "/login/"
