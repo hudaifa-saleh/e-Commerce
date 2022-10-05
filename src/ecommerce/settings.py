@@ -39,13 +39,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Developments Apps
-    "products.apps.ProductsConfig",
-    "search.apps.SearchConfig",
     "tags.apps.TagsConfig",
     "carts.apps.CartsConfig",
     "orders.apps.OrdersConfig",
     "accounts.apps.AccountsConfig",
     "billing.apps.BillingConfig",
+    "address.apps.AddressConfig",
+    "products.apps.ProductsConfig",
+    "search.apps.SearchConfig",
 ]
 
 MIDDLEWARE = [
