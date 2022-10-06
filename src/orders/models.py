@@ -1,6 +1,7 @@
 import math
 from django.db import models
 from django.db.models.signals import pre_save, post_save
+from address.models import Address
 from billing.models import BillingProfile
 from carts.models import Cart
 from ecommerce.utils import unique_order_id_generator
@@ -26,16 +27,15 @@ class OrderManager(models.Manager):
 
 
 class Order(models.Model):
-    billing_profile = models.ForeignKey(BillingProfile, blank=True, null=True, on_delete=models.CASCADE)
+    billing_profile = models.ForeignKey(BillingProfile, related_name="billing_profile", blank=True, null=True, on_delete=models.CASCADE)
+    billing_address = models.ForeignKey(Address, related_name="billing_address", blank=True, null=True, on_delete=models.CASCADE)
+    shipping_address = models.ForeignKey(Address, related_name="shipping_address", blank=True, null=True, on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart, related_name="cart", on_delete=models.CASCADE)
     order_id = models.CharField(max_length=120, null=True, blank=True)
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     status = models.CharField(max_length=120, default="created", choices=ORDER_STATUS_CHOICES)
     shipping_total = models.DecimalField(default=5.99, max_digits=100, decimal_places=2)
     total = models.DecimalField(default=0.00, max_digits=100, decimal_places=2)
     active = models.BooleanField(default=True)
-    # billing_address
-    # shipping_address
-
     objects = OrderManager()
 
     def __str__(self):
