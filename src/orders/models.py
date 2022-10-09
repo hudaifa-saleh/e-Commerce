@@ -17,7 +17,7 @@ ORDER_STATUS_CHOICES = (
 class OrderManager(models.Manager):
     def new_or_get(self, billing_profile, cart_obj):
         created = False
-        qs = self.get_queryset().filter(billing_profile=billing_profile, cart=cart_obj)
+        qs = self.get_queryset().filter(billing_profile=billing_profile, cart=cart_obj, active=True, status="created")
         if qs.count() == 1:
             obj = qs.first()
         else:
@@ -58,6 +58,12 @@ class Order(models.Model):
         if billing_profile and billing_address and shipping_address and total > 0:
             return True
         return False
+
+    def mark_paid(self):
+        if self.cheke_done():
+            self.status = "paid"
+            self.save()
+        return self.status
 
 
 ####################################################### Signals ################################################################
