@@ -1,0 +1,30 @@
+[
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "title": "T-Shirt",
+        "slug": "t-shirt",
+        "description": "Django makes it easier to build better web apps more quickly and with less code.",
+        "price": "100.99",
+        "image": "products/3531093245/3531093245.png",
+        "featured": true,
+        "active": true,
+        "timestamp": "2022-10-05T09:02:19.657Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "title": "visual mockups.",
+        "slug": "visual-mockups",
+        "description": "visual mockups.visual mockups.visual mockups.",
+        "price": "20.99",
+        "image": "products/3526010742/3526010742.png",
+        "featured": true,
+        "active": true,
+        "timestamp": "2022-10-08T05:26:03.451Z"
+    }
+}
+]

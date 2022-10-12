@@ -1,10 +1,44 @@
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
 from django.contrib.auth import authenticate, login, get_user_model
+from django.views.generic import CreateView, FormView, DetailView, View, UpdateView
 from accounts.forms import GuestForm, LoginForm, RegisterForm
 from accounts.models import GuestEmail
 
 User = get_user_model()
+
+
+class RegisterView(CreateView):
+    form_class = RegisterForm
+    template_name = "accounts/register.html"
+    success_url = "/login/"
+
+
+class LoginView(FormView):
+    form_class = LoginForm
+    success_url = "/"
+    template_name = "accounts/login.html"
+    default_next = "/"
+
+    def form_valid(self, form):
+        request = self.request
+        next_ = request.GET.get("next")
+        next_post = request.POST.get("next")
+        redirect_path = next_ or next_post or None
+        email = form.cleaned_data.get("email")
+        password = form.cleaned_data.get("password")
+        user = authenticate(request, username=email, password=password)
+        print(user)
+        if user is not None:
+            login(request, user)
+            try:
+                del request.session["guest_email_id"]
+            except:
+                pass
+            if is_safe_url(redirect_path, request.get_host()):
+                return redirect(redirect_path)
+            return redirect("/")
+        return super(LoginView, self).form_invalid(form)
 
 
 def guest_register_view(request):
@@ -21,9 +55,9 @@ def guest_register_view(request):
             return redirect(redirect_path)
         else:
             return redirect("/regiester/")
-    return redirect('/regiester/')
+    return redirect("/regiester/")
 
-
+"""
 def login_page(request):
     form = LoginForm(request.POST or None)
     context = {"form": form}
@@ -63,3 +97,4 @@ def register_page(request):
         newUser = User.objects.create_user(username, email, password)
         print(newUser)
     return render(request, "accounts/register.html", context)
+"""
