@@ -3,6 +3,7 @@ from django.views import generic
 from django.http import Http404
 from products.models import Product
 from carts.models import Cart
+from analytics.mixins import ObjectViewedMixin
 
 
 class ProductFeaturedListView(generic.ListView):
@@ -13,7 +14,7 @@ class ProductFeaturedListView(generic.ListView):
         return Product.objects.all().featured()
 
 
-class ProductFeaturedDetailView(generic.DetailView):
+class ProductFeaturedDetailView(ObjectViewedMixin, generic.DetailView):
     queryset = Product.objects.all().featured()
     template_name = "products/featuerd_detail.html"
 
@@ -32,7 +33,7 @@ class ProductListView(generic.ListView):
         return Product.objects.all()
 
 
-class ProductDetailSlugView(generic.DetailView):
+class ProductDetailSlugView(ObjectViewedMixin, generic.DetailView):
     queryset = Product.objects.all()
     template_name = "products/product_detail.html"
 
@@ -55,10 +56,11 @@ class ProductDetailSlugView(generic.DetailView):
             instance = qs.first()
         except:
             raise Http404("Uhhmmm ")
+        # object_viewed_signal.save(instance.__clean__, instance=instance, request=request)
         return instance
 
 
-class ProductDetailView(generic.DetailView):
+class ProductDetailView(ObjectViewedMixin, generic.DetailView):
     template_name = "products/product_detail.html"
 
     def get_context_data(self, *args, **kwargs):

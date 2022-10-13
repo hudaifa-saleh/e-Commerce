@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "billing.apps.BillingConfig",
     "address.apps.AddressConfig",
+    "analytics.apps.AnalyticsConfig",
     "products.apps.ProductsConfig",
     "search.apps.SearchConfig",
 ]
