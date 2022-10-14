@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.utils.http import is_safe_url
+from django.utils.http import url_has_allowed_host_and_scheme
 from accounts.forms import LoginForm, GuestForm
 from accounts.models import GuestEmail
 from address.forms import AddressForm

@@ -1,4 +1,4 @@
-from .signals import object_viewed_signal
+from analytics.signals import object_viewed_signal
 
 
 class ObjectViewedMixin(object):
