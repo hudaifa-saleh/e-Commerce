@@ -4,6 +4,8 @@ from django.contrib.auth import authenticate, login, get_user_model
 from django.views.generic import CreateView, FormView, DetailView, View, UpdateView
 from accounts.forms import GuestForm, LoginForm, RegisterForm
 from accounts.models import GuestEmail
+# from analytics.models import user_logged_in_receiver
+from accounts.signals import user_logged_in
 
 User = get_user_model()
 
@@ -32,6 +34,7 @@ class LoginView(FormView):
         print(password)
         if user is not None:
             login(request, user)
+            user_logged_in.send(user.__class__, instance=user, request=request)
             try:
                 del request.session["guest_email_id"]
             except:
