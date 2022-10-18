@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from django.contrib.auth.views import LogoutView
 from ecommerce.views import about_page, contact_page, home_page
-from accounts.views import LoginView, RegisterView, guest_register_view
+from accounts.views import LoginView, RegisterView, guest_register_view, AccountHomeView
 from address.views import checkout_address_create_view, checkout_address_reuse_view
 
 urlpatterns = [
@@ -15,6 +15,8 @@ urlpatterns = [
     re_path(r"^login/$", LoginView.as_view(), name="login"),
     re_path(r"^logout/$", LogoutView.as_view(), name="logout"),
     re_path(r"^register/$", RegisterView.as_view(), name="register"),
+    re_path(r"^account/$", AccountHomeView.as_view(), name="account"),
+    re_path(r'^accounts/', include("accounts.passwords.urls")),
     re_path(r"^register/guest/$", guest_register_view, name="guest_register"),
     
     re_path(r"^checkout/address/create/$", checkout_address_create_view, name="checkout_address_create"),

@@ -3,12 +3,12 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, full_name=None, password=None, is_active=True, is_staff=False, is_admin=False):
+    def create_user(self, email, username=None, password=None, is_active=True, is_staff=False, is_admin=False):
         if not email:
             raise ValueError("Users must have an email address")
         if not password:
             raise ValueError("Users must have a password")
-        user_obj = self.model(email=self.normalize_email(email), full_name=full_name)
+        user_obj = self.model(email=self.normalize_email(email), username=username)
         user_obj.set_password(password)  # change user password
         user_obj.staff = is_staff
         user_obj.admin = is_admin
@@ -16,18 +16,18 @@ class UserManager(BaseUserManager):
         user_obj.save(using=self._db)
         return user_obj
 
-    def create_staffuser(self, email, full_name=None, password=None):
-        user = self.create_user(email, full_name=full_name, password=password, is_staff=True)
+    def create_staffuser(self, email, username=None, password=None):
+        user = self.create_user(email, username=username, password=password, is_staff=True)
         return user
 
-    def create_superuser(self, email, full_name=None, password=None):
-        user = self.create_user(email, full_name=full_name, password=password, is_staff=True, is_admin=True)
+    def create_superuser(self, email, username=None, password=None):
+        user = self.create_user(email, username=username, password=password, is_staff=True, is_admin=True)
         return user
 
 
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
-    full_name = models.CharField(max_length=255, blank=True, null=True)
+    username = models.CharField(max_length=255, blank=True, null=True)
     is_active = models.BooleanField(default=True)  # can login
     staff = models.BooleanField(default=False)  # staff user non superuser
     admin = models.BooleanField(default=False)  # superuser
@@ -40,9 +40,9 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-    def get_full_name(self):
-        if self.full_name:
-            return self.full_name
+    def get_username(self):
+        if self.username:
+            return self.username
         return self.email
 
     def get_short_name(self):

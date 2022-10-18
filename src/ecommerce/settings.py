@@ -10,7 +10,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = "=8km3p$213etzrjl+7l5y=^ai^zcaj7h5#7w@79z7=4c)g6(_w"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1"]
 
 
 # Application definition
@@ -23,6 +23,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Third party libraries
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     "bootstrap4",
     # Developments Apps
     "tags.apps.TagsConfig",
@@ -35,6 +38,8 @@ INSTALLED_APPS = [
     "products.apps.ProductsConfig",
     "search.apps.SearchConfig",
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -119,5 +124,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn", "static_root")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "static_my_proj", "media_root")
 
-
+LOGIN_URL = "/login/"
+LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/login/"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "hodaeyfha@gmail.com"  # sendgrid
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "Django ECommerce <hodaeyfha@gmail.com>"
+BASE_URL = "127.0.0.1:8000"

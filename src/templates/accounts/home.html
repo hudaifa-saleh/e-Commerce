@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% url "about" as about_url %}
+{% url "orders:list" as order_url %}
+{% url "billing-payment-method" as billing_url %}
+{% url "addresses" as addresses_ur l%}
+{% url "account:user-update" as account_url %}
+{% url "password_change" as password_change_url%}
+<!-- {% url "library" as library_url %} -->
+<!-- {% url "marketing-pref" as marketing_pref_url %} -->
+{% url "account:user-product-history" as account_history_url %}
+
+
+{% block content %}
+<div class='row'>
+    <div class='col-12'>
+        <h1>Account</h1>
+        <hr />
+    </div>
+    <div class='col-12 col-md-3 my-3'>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Support</h4>
+                <div class='list-group'>
+                    <a class='list-group-item' href='{{ about_url }}'>About</a>
+                    <a class='list-group-item' href='{% url "contact" %}'>Contact</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='col-12 col-md-3 my-3' id='billing'>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Billing</h4>
+                <div class='list-group'>
+                    <a class='list-group-item' href='{{ order_url }}'>Orders</a>
+                    <a class='list-group-item' href='{{ billing_url }}'>Payment Methods</a>
+                    <a class='list-group-item' href='{{ addresses_url }}'>Addresses</a>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class='col-12 col-md-3 my-3'>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Account Details</h4>
+                <div class='list-group'>
+                    <a class='list-group-item' href='{{ account_url }}'>Update Details</a>
+                    <a class='list-group-item' href='{{ password_change_url }}'>Change Password</a>
+                    <a class='list-group-item' href='#'>Library</a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class='col-12 col-md-3 my-3'>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Preferences</h4>
+                <div class='list-group'>
+                    <a class='list-group-item' href='#'>Email Marketing</a>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class='col-12 col-md-3 my-3'>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">History</h4>
+                <div class='list-group'>
+                    <a class='list-group-item' href='{{ account_history_url }}'>Products</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

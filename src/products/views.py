@@ -1,12 +1,13 @@
 from django.shortcuts import render
 from django.views import generic
 from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
 from products.models import Product
 from carts.models import Cart
 from analytics.mixins import ObjectViewedMixin
 
 
-class ProductFeaturedListView(generic.ListView):
+class ProductFeaturedListView(LoginRequiredMixin, generic.ListView):
     template_name = "products/product_list.html"
 
     def get_queryset(self, *args, **kwargs):
