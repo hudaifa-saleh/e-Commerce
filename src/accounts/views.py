@@ -38,7 +38,7 @@ class LoginView(FormView):
         redirect_path = next_ or next_post or None
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request, email=email, password=password)
         print("User: ", user)
         print("Password: ", password)
         if user is not None:

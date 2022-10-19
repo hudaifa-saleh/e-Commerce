@@ -14,7 +14,7 @@ class UserAdminCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("username", "email")  #'username',)
+        fields = ["email"]  #'username',)
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -41,7 +41,7 @@ class UserAdminChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("username", "email", "password", "is_active", "admin")
+        fields = ("email", "password", "is_active", "admin")
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -106,7 +106,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("username", "email")  #'username',)
+        fields = ["email"]  #'username',)
 
     def clean_password2(self):
         # Check that the two password entries match

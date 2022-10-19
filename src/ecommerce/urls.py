@@ -11,14 +11,13 @@ urlpatterns = [
     re_path(r"^$", home_page, name="home"),
     re_path(r"^about/$", about_page, name="about"),
     re_path(r"^contact/$", contact_page, name="contact"),
-
     re_path(r"^login/$", LoginView.as_view(), name="login"),
     re_path(r"^logout/$", LogoutView.as_view(), name="logout"),
     re_path(r"^register/$", RegisterView.as_view(), name="register"),
     re_path(r"^account/$", AccountHomeView.as_view(), name="account"),
-    re_path(r'^accounts/', include("accounts.passwords.urls")),
+    # re_path(r'^accounts/', include("accounts.passwords.urls")),
+    path("accounts/", include("allauth.urls")),
     re_path(r"^register/guest/$", guest_register_view, name="guest_register"),
-    
     re_path(r"^checkout/address/create/$", checkout_address_create_view, name="checkout_address_create"),
     re_path(r"^checkout/address/reuse/$", checkout_address_reuse_view, name="checkout_address_reuse"),
     re_path(r"^cart/", include("carts.urls", namespace="cart")),

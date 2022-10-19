@@ -5,7 +5,7 @@
 {% url "billing-payment-method" as billing_url %}
 {% url "addresses" as addresses_ur l%}
 {% url "account:user-update" as account_url %}
-{% url "password_change" as password_change_url%}
+{% url "accounts:account_change_password" as password_change_url%}
 <!-- {% url "library" as library_url %} -->
 <!-- {% url "marketing-pref" as marketing_pref_url %} -->
 {% url "account:user-product-history" as account_history_url %}
@@ -48,7 +48,7 @@
                 <h4 class="card-title">Account Details</h4>
                 <div class='list-group'>
                     <a class='list-group-item' href='{{ account_url }}'>Update Details</a>
-                    <a class='list-group-item' href='{{ password_change_url }}'>Change Password</a>
+                    <a class='list-group-item' href='{% url "account_change_password"%}'>Change Password</a>
                     <a class='list-group-item' href='#'>Library</a>
 
                 </div>

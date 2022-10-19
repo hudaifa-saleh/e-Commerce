@@ -16,18 +16,18 @@ class UserManager(BaseUserManager):
         user_obj.save(using=self._db)
         return user_obj
 
-    def create_staffuser(self, email, username=None, password=None):
-        user = self.create_user(email, username=username, password=password, is_staff=True)
+    def create_staffuser(self, email, password=None):
+        user = self.create_user(email, password=password, is_staff=True)
         return user
 
-    def create_superuser(self, email, username=None, password=None):
-        user = self.create_user(email, username=username, password=password, is_staff=True, is_admin=True)
+    def create_superuser(self, email, password=None):
+        user = self.create_user(email, password=password, is_staff=True, is_admin=True)
         return user
 
 
 class User(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
-    username = models.CharField(max_length=255, blank=True, null=True)
+    username = models.CharField(max_length=255, blank=True, null=True, unique=False)
     is_active = models.BooleanField(default=True)  # can login
     staff = models.BooleanField(default=False)  # staff user non superuser
     admin = models.BooleanField(default=False)  # superuser

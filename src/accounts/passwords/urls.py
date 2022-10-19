@@ -1,23 +1,7 @@
-# # accounts.passwords.urls.py
-# from django.urls import re_path
-# from django.contrib.auth import views as auth_views
-
-# urlpatterns = [
-#     re_path(r"^password/change/$", auth_views.PasswordChangeView.as_view(), name="password_change"),
-#     re_path(r"^password/change/done/$", auth_views.PasswordChangeDoneView.as_view(), name="password_change_done"),
-#     re_path(r"^password/reset/$", auth_views.PasswordResetView.as_view(), name="password_reset"),
-#     re_path(r"^password/reset/done/$", auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
-#     re_path(r"^password/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$", auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
-#     re_path(r"^password/reset/complete/$", auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
-# ]
-
-
 from django.urls import path, re_path
-
-# from . import views
 from allauth.account import views
 
-
+app_name = "passwords"
 urlpatterns = [
     path("signup/", views.signup, name="account_signup"),
     path("login/", views.login, name="account_login"),
@@ -35,3 +19,20 @@ urlpatterns = [
     re_path(r"^password/reset/key/(?P<uidb36>[0-9A-Za-z]+)-(?P<key>.+)/$", views.password_reset_from_key, name="account_reset_password_from_key"),
     path("password/reset/key/done/", views.password_reset_from_key_done, name="account_reset_password_from_key_done"),
 ]
+
+
+"""
+# accounts.passwords.urls.py
+from django.urls import re_path
+from django.contrib.auth import views as auth_views
+
+urlpatterns = [
+    re_path(r"^password/change/$", auth_views.PasswordChangeView.as_view(), name="password_change"),
+    re_path(r"^password/change/done/$", auth_views.PasswordChangeDoneView.as_view(), name="password_change_done"),
+    re_path(r"^password/reset/$", auth_views.PasswordResetView.as_view(), name="password_reset"),
+    re_path(r"^password/reset/done/$", auth_views.PasswordResetDoneView.as_view(), name="password_reset_done"),
+    re_path(r"^password/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$", 
+    auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
+    re_path(r"^password/reset/complete/$", auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
+]
+"""
