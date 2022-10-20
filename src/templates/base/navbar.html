@@ -4,6 +4,7 @@
 {% url 'account_login' as login_url %}
 {% url 'logout' as logout_url %}
 {% url 'register' as register_url %}
+{% url 'login' as login_url %}
 {% url 'account' as account_url %}
 {% url 'cart:home' as cart_url %}
 <!-- navbar-dark bg-dark mb-3 -->
@@ -46,7 +47,7 @@
                 </li>
                 {% else %}
                 <li class="nav-item {% if request.path == register_url %}active{% endif %}">
-                    <a class="nav-link" href="{{ register_url }}">Register</a>
+                    <a class="nav-link" href="{{ register_url }}">Sign up</a>
                 </li>
                 <li class="nav-item {% if request.path == login_url %}active{% endif %}">
                     <a class="nav-link" href="{% url 'account_login' %}">Login</a>

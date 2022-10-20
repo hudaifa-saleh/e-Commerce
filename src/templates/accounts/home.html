@@ -33,7 +33,7 @@
             <div class="card-body">
                 <h4 class="card-title">Billing</h4>
                 <div class='list-group'>
-                    <a class='list-group-item' href='{{ order_url }}'>Orders</a>
+                    <a class='list-group-item' href="{% url 'orders:list' %}">Orders</a>
                     <a class='list-group-item' href='{{ billing_url }}'>Payment Methods</a>
                     <a class='list-group-item' href='{{ addresses_url }}'>Addresses</a>
 
