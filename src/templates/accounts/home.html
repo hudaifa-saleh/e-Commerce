@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% url "about" as about_url %}
-{% url "orders:list" as order_url %}
+{% url "orders:order_list" as order_url %}
 {% url "billing-payment-method" as billing_url %}
 {% url "addresses" as addresses_ur l%}
 {% url "account:user-update" as account_url %}
@@ -33,7 +33,7 @@
             <div class="card-body">
                 <h4 class="card-title">Billing</h4>
                 <div class='list-group'>
-                    <a class='list-group-item' href="{% url 'orders:list' %}">Orders</a>
+                    <a class='list-group-item' href="{% url 'orders:order_list' %}">Orders</a>
                     <a class='list-group-item' href='{{ billing_url }}'>Payment Methods</a>
                     <a class='list-group-item' href='{{ addresses_url }}'>Addresses</a>
 

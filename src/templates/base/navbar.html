@@ -30,7 +30,7 @@
                     <a class="nav-link" href="{{ contact_url }}">Contact</a>
                 </li>
                 <li class="nav-item {% if request.path == product_list_url %}active{% endif %}">
-                    <a class="nav-link" href="{{ product_list_url }}">Products</a>
+                    <a class="nav-link" href="{{product_list_url}}">Products</a>
                 </li>
                 {% if request.user.is_authenticated %}
                 <li class="nav-item dropdown">
@@ -55,8 +55,8 @@
                 {% endif %}
                 <li class="nav-item {% if request.path == cart_url %}active{% endif %}">
                     <a class="nav-link" href="{{ cart_url }}"><span
-                            class='navbar-cart-count'>{{ request.session.cart_items }}</span> 
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+                            class='navbar-cart-count'>{{ request.session.cart_items }}</span>
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
                 </li>
 
                 {% include 'search/snippets/search-form.html' %}
