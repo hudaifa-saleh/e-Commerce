@@ -47,7 +47,7 @@
                 </li>
                 {% else %}
                 <li class="nav-item {% if request.path == register_url %}active{% endif %}">
-                    <a class="nav-link" href="{{ register_url }}">Sign up</a>
+                    <a class="nav-link" href="{% url 'account_signup' %}">Sign up</a>
                 </li>
                 <li class="nav-item {% if request.path == login_url %}active{% endif %}">
                     <a class="nav-link" href="{% url 'account_login' %}">Login</a>
