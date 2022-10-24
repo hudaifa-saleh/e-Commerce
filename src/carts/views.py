@@ -12,6 +12,7 @@ from products.models import Product
 
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
+    print(cart_obj.is_digital)
     return render(request, "carts/home.html", {"cart": cart_obj})
 
 
@@ -45,8 +46,9 @@ def checkout_home(request):
     billing_address_id = request.session.get("billing_address_id", None)
     shipping_address_id = request.session.get("shipping_address_id", None)
     billing_profile, billing_profile_created = BillingProfile.objects.new_or_get(request)
-
     address_qs = None
+    shipping_address_required = not cart_obj.is_digital
+
     if billing_profile is not None:
         address_qs = Address.objects.filter(billing_profile=billing_profile)
 
@@ -75,7 +77,7 @@ def checkout_home(request):
         "guest_form": guest_form,
         "address_form": address_form,
         "address_qs": address_qs,
-        # "billing_address_form": billing_address_form,
+        "shipping_address_required": shipping_address_required,
     }
     return render(request, "carts/checkout.html", context)
 

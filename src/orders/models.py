@@ -33,7 +33,12 @@ class OrderManager(models.Manager):
 
     def new_or_get(self, billing_profile, cart_obj):
         created = False
-        qs = self.get_queryset().filter(billing_profile=billing_profile, cart=cart_obj, active=True, status="created")
+        qs = self.get_queryset().filter(
+            billing_profile=billing_profile,
+            cart=cart_obj,
+            active=True,
+            status="created",
+        )
         if qs.count() == 1:
             obj = qs.first()
         else:
@@ -72,11 +77,26 @@ class Order(models.Model):
         return new_total
 
     def cheke_done(self):
+        shipping_address_required = not self.cart.is_digital
+        shipping_done = False
+
+        if shipping_address_required and self.shipping_address:
+            shipping_done = True
+        elif shipping_address_required and not self.shipping_address:
+            shipping_done = False
+        else:
+            shipping_done = True
+
+        # if not shipping_address_required and not self.shipping_address:
+        #     shipping_done = True
+        # if shipping_address_required and not self.shipping_address:
+        #     shipping_done = False
+
         billing_profile = self.billing_profile
         billing_address = self.billing_address
-        shipping_address = self.shipping_address
+        # shipping_address = self.shipping_address
         total = self.total
-        if billing_profile and billing_address and shipping_address and total > 0:
+        if billing_profile and billing_address and shipping_done and total > 0:
             return True
         return False
 
@@ -87,7 +107,7 @@ class Order(models.Model):
         return self.status
 
     def get_absolute_url(self):
-        return reverse("orders:detail", kwargs={"order_id": self.order_id})
+        return reverse("orders:order_detail", kwargs={"order_id": self.order_id})
 
     def get_status(self):
         if self.status == "refunded":
