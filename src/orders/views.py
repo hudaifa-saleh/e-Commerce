@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from orders.models import Order
+from orders.models import Order, ProductPurchase
 
 # from django.shortcuts import render
 
@@ -25,3 +25,10 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         return Order.objects.by_request(self.request)
+
+
+class LibraryView(LoginRequiredMixin, ListView):
+    template_name = "orders/library.html"
+
+    def get_queryset(self):
+        return ProductPurchase.objects.by_request(self.request).digital()

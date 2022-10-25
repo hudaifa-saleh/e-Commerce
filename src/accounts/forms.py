@@ -49,6 +49,13 @@ class UserAdminChangeForm(forms.ModelForm):
         # field does not have access to the initial value
         return self.initial["password"]
 
+class UserDetailChangeForm(forms.ModelForm):
+    full_name = forms.CharField(label='Name', required=False, widget=forms.TextInput(attrs={"class": 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ['full_name']
+        
 
 class GuestForm(forms.Form):
     email = forms.EmailField()

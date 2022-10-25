@@ -22,6 +22,7 @@ class ProductFeaturedDetailView(ObjectViewedMixin, generic.DetailView):
 
 class ProductListView(generic.ListView):
     template_name = "products/product_list.html"
+    success_url = "/list/"
 
     def get_context_data(self, *args, **kwargs):
         context = super(ProductListView, self).get_context_data(*args, **kwargs)
@@ -76,3 +77,4 @@ class ProductDetailView(ObjectViewedMixin, generic.DetailView):
         if instance is None:
             raise Http404("Product doesn't exist")
         return instance
+

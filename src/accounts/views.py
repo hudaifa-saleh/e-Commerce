@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.contrib.auth import authenticate, login, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, FormView, DetailView, View, UpdateView
-from accounts.forms import GuestForm, LoginForm, RegisterForm
+from accounts.forms import GuestForm, LoginForm, RegisterForm, UserDetailChangeForm
 from accounts.models import GuestEmail
 
 # from analytics.models import user_logged_in_receiver
@@ -51,6 +52,8 @@ def login_page(request):
         else:
             print("Error...")
     return render(request, "accounts/login.html", context)
+
+
 
 
 # class LoginView(FormView):

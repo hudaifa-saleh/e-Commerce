@@ -19,3 +19,16 @@
 >>> Product.objects.get(id=2)
 <Product: t_shirt>
 >>> Product.objects.get(id=3)
+
+>>> from orders.models import ProductPurchase
+>>> ProductPurchase.objects.all().count()
+4
+>>> from billing.models import BillingProfile
+>>> user_1 = BillingProfile.objects.first()
+>>> user_1
+<BillingProfile: admin@gmail.com>
+>>> user_1.productpurchase_set.all()
+<QuerySet [<ProductPurchase: T-Shirt>, <ProductPurchase: visual mockups.>, <ProductPurchase: Learning a little each day adds up>, <ProductPurchase: MP3>]>
+>>> user_1.productpurchase_set.all().count()
+4
+>>> user_1.productpurchase_set.filter(pk__gt=0).count()
