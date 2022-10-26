@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "address.apps.AddressConfig",
     "analytics.apps.AnalyticsConfig",
     "products.apps.ProductsConfig",
+    "library.apps.LibraryConfig",
     "search.apps.SearchConfig",
 ]
 
@@ -140,7 +141,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "static_my_proj", "media_root")
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/accounts/login/"
-ACCOUNT_AUTHENTICATION_METHOD ='username_email'
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

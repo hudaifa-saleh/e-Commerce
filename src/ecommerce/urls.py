@@ -6,7 +6,6 @@ from django.contrib.auth.views import LogoutView
 from ecommerce.views import about_page, contact_page, home_page
 from accounts.views import login_page, RegisterView, guest_register_view, AccountHomeView
 from address.views import checkout_address_create_view, checkout_address_reuse_view
-from orders.views import LibraryView
 
 urlpatterns = [
     re_path(r"^$", home_page, name="home"),
@@ -23,7 +22,7 @@ urlpatterns = [
     re_path(r"^checkout/address/reuse/$", checkout_address_reuse_view, name="checkout_address_reuse"),
     re_path(r"^cart/", include("carts.urls", namespace="cart")),
     re_path(r"^products/", include("products.urls", namespace="products")),
-    re_path(r"^library/$", LibraryView.as_view(), name="library"),
+    re_path(r"^library/", include("library.urls", namespace="librarys")),
     re_path(r"^orders/", include("orders.urls", namespace="orders")),
     re_path(r"^search/", include("search.urls", namespace="search")),
     re_path(r"^admin/", admin.site.urls),
