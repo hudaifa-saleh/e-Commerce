@@ -1,10 +1,11 @@
+from distutils.command.upload import upload
 from django.db import models
 from django.urls import reverse
 from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.db.models.signals import pre_save, post_save
 from ecommerce.utils import unique_slug_generator
-from products.ImageFilename import upload_image_path
+from products.ImageFilename import upload_image_path, upload_product_file_location
 
 
 class ProductQuerySet(QuerySet):
@@ -15,12 +16,7 @@ class ProductQuerySet(QuerySet):
         return self.filter(featured=True, active=True)
 
     def search(self, query):
-        lookups = (
-                Q(title__icontains=query) | 
-                Q(description__icontains=query) | 
-                Q(price__icontains=query) | 
-                Q(tag__title__icontains=query)
-                )
+        lookups = Q(title__icontains=query) | Q(description__icontains=query) | Q(price__icontains=query) | Q(tag__title__icontains=query)
         # tshirt, t-shirt, t shirt, red, green, blue,
         return self.filter(lookups).distinct()
 
@@ -80,3 +76,11 @@ def product_per_save_receiver(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(product_per_save_receiver, sender=Product)
+
+
+class ProductFile(models.Model):
+    products = models.ForeignKey(Product, related_name="product_file", on_delete=models.CASCADE)
+    file = models.FileField(upload_to=upload_product_file_location)
+
+    def __str__(self):
+        return str(self.file.name)

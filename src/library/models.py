@@ -13,7 +13,7 @@ class LibraryPurchaseQuerSet(models.query.QuerySet):
 
     def digital(self):
         return self.filter(product__is_digital=True)
-        
+
 
 class LibraryPurchaseManager(models.Manager):
     def get_queryset(self):
@@ -28,11 +28,15 @@ class LibraryPurchaseManager(models.Manager):
     def by_request(self, request):
         return self.get_queryset().by_request(request)
 
-    def product_by_request(self, request):
+    def products_by_id(self, request):
         qs = self.by_request(request).digital()
         ids_ = [x.product.id for x in qs]
-        products_id = Product.objects.filter(id__in=ids_).distance()
-        return products_id
+        return ids_
+
+    def products_by_request(self, request):
+        ids_ = self.products_by_id(request)
+        products_qs = Product.objects.filter(id__in=ids_).distinct()
+        return products_qs
 
 
 class LibraryPurchase(models.Model):

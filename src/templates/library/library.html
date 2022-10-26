@@ -13,13 +13,18 @@
     <div class='col'>
         <table class='table'>
             <thead>
-                <th>Product</th><th>Order</th><th>Download</th>
+                <th>Product</th><th>Download</th>
             </thead>
             <tbody>
                 {% for object in object_list %}
-                <tr>
+                {% comment %} <tr>
                     <td><a href='{{ object.product.get_absolute_url }}'>{{ object.product.title}}</a></td>
                     <td><a href='#'>Order #{{ object.order_id}}</a></td>
+                    <td>Comming soon</td>
+                </tr> {% endcomment %}
+                <tr>
+                    <td><a href='{{ object.get_absolute_url }}'>{{ object.title}}</a></td>
+                    {% comment %} <td><a href='#'>Order #{{ object.order_id}}</a></td> {% endcomment %}
                     <td>Comming soon</td>
                 </tr>
                 {% empty %}

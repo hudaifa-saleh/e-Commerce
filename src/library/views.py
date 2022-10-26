@@ -8,4 +8,4 @@ class LibraryView(LoginRequiredMixin, ListView):
     template_name = "library/library.html"
 
     def get_queryset(self):
-        return LibraryPurchase.objects.by_request(self.request).digital()
+        return LibraryPurchase.objects.products_by_request(self.request)

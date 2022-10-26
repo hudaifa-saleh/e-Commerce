@@ -1,6 +1,8 @@
 import os
 import random
 
+from ecommerce.utils import unique_slug_generator
+
 
 def get_filename_extension(filepath):
     base_name = os.path.basename(filepath)
@@ -15,3 +17,12 @@ def upload_image_path(instance, filename, **kwargs):
     name, ext = get_filename_extension(filename)
     finalFilename = "{newFilename}{ext}".format(newFilename=newFilename, ext=ext)
     return "products/{newFilename}/{finalFilename}".format(newFilename=newFilename, finalFilename=finalFilename)
+
+
+def upload_product_file_location(instance, filename):
+    print(instance.id)
+    slug = instance.product.slug
+    if not slug:
+        slug = unique_slug_generator(instance.product)
+    location = "product/{}/".format(slug)
+    return location + filename
