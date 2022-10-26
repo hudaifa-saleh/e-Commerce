@@ -21,8 +21,8 @@ def upload_image_path(instance, filename, **kwargs):
 
 def upload_product_file_location(instance, filename):
     print(instance.id)
-    slug = instance.product.slug
+    slug = instance.products.slug
     if not slug:
-        slug = unique_slug_generator(instance.product)
+        slug = unique_slug_generator(instance.products)
     location = "product/{}/".format(slug)
     return location + filename

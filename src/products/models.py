@@ -1,10 +1,11 @@
-from distutils.command.upload import upload
 from django.db import models
 from django.urls import reverse
 from django.db.models import Q
+from django.conf import settings
 from django.db.models.query import QuerySet
 from django.db.models.signals import pre_save, post_save
-from ecommerce.utils import unique_slug_generator
+from django.core.files.storage import FileSystemStorage
+from ecommerce.utils import get_filename, unique_slug_generator
 from products.ImageFilename import upload_image_path, upload_product_file_location
 
 
@@ -68,6 +69,11 @@ class Product(models.Model):
         # return "/products/{slug}/".format(slug=self.slug)
         return reverse("products:detail", kwargs={"slug": self.slug})
 
+    def get_downloads(self):
+        qs = self.productfile_set.all()
+        return qs
+
+
 
 ####################################################### Signals ################################################################
 def product_per_save_receiver(sender, instance, *args, **kwargs):
@@ -79,8 +85,18 @@ pre_save.connect(product_per_save_receiver, sender=Product)
 
 
 class ProductFile(models.Model):
-    products = models.ForeignKey(Product, related_name="product_file", on_delete=models.CASCADE)
-    file = models.FileField(upload_to=upload_product_file_location)
+    products = models.ForeignKey(Product, on_delete=models.CASCADE)
+    file = models.FileField(upload_to=upload_product_file_location, storage=FileSystemStorage(location=settings.PROTECTED_ROOT))
 
     def __str__(self):
         return str(self.file.name)
+
+    @property
+    def display_name(self):
+        og_name = get_filename(self.file.name)
+        # if self.name:
+        #     return self.name
+        return og_name
+
+    def get_download_url(self):  # detail view
+        return self.file.url
