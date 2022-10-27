@@ -53,14 +53,25 @@ class UserSession(models.Model):
 
 ####################################################### Signals ################################################################
 # ObjectViewed
-def object_viewed_reciver(instance, sender, request, *args, **kwargs):
-    c_type = ContentType.objects.get_for_model(sender)
+# def object_viewed_reciver(instance, sender, request, *args, **kwargs):
+#     c_type = ContentType.objects.get_for_model(sender)
+#     if request.user.is_authenticated:
+#         user = request.user
+#     new_view_obj = ObjectViewed.objects.create(user=user, content_type=c_type, object_id=instance.id, ip_address=get_client_ip(request))
+
+def object_viewed_receiver(sender, instance, request, *args, **kwargs):
+    c_type = ContentType.objects.get_for_model(sender) # instance.__class__
+    user = None
     if request.user.is_authenticated:
         user = request.user
-    new_view_obj = ObjectViewed.objects.create(user=user, content_type=c_type, object_id=instance.id, ip_address=get_client_ip(request))
+    new_view_obj = ObjectViewed.objects.create(
+        user = user, content_type=c_type, object_id=instance.id, ip_address = get_client_ip(request)
+    )
 
 
-object_viewed_signal.connect(object_viewed_reciver)
+object_viewed_signal.connect(object_viewed_receiver)
+
+object_viewed_signal.connect(object_viewed_receiver)
 
 # UserSession
 def user_logged_in_receiver(sender, instance, request, *args, **kwargs):
