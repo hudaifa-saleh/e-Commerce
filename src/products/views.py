@@ -1,8 +1,12 @@
-from django.shortcuts import render
+import os
+from mimetypes import guess_type
+from wsgiref.util import FileWrapper
+from django.conf import settings
+from django.shortcuts import redirect
 from django.views import generic
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from products.models import Product
+from products.models import Product, ProductFile
 from carts.models import Cart
 from analytics.mixins import ObjectViewedMixin
 
@@ -77,4 +81,31 @@ class ProductDetailView(ObjectViewedMixin, generic.DetailView):
         if instance is None:
             raise Http404("Product doesn't exist")
         return instance
+
+
+class ProductDownloadView(generic.View):
+    def get(self, request, *args, **kwargs):
+        slug = kwargs.get('slug')
+        pk = kwargs.get('pk')
+        downloads_qs = ProductFile.objects.filter(pk=pk, products__slug=slug)
+        if downloads_qs.count() != 1:
+            raise Http404('Download Not found')
+        downloads_obj = downloads_qs.first()
+        # Permission Checks
+        file_root = settings.PROTECTED_ROOT
+        file_path = downloads_obj.file.path
+        final_file_path = os.path.join(file_root, file_path)
+        with open(final_file_path, 'rb') as f:
+            wrapper = FileWrapper(f)
+            # content = 'some_text'
+            mimetypes = 'application/force-download'
+            guess_mimetypes = guess_type(file_path)[0] #file_name.MP4
+            if guess_mimetypes:
+                mimetypes = guess_mimetypes
+            resource = HttpResponse(wrapper, content_type=mimetypes)
+            resource['Content-Disposition'] = 'attachment;filename=%s '%(downloads_obj.display_name)
+            resource['X-SendFile'] = str(downloads_obj.display_name)
+            return resource
+        # return redirect(download_obj.get_default_url())
+
 

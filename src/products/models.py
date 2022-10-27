@@ -2,14 +2,14 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import Q
 from django.conf import settings
-from django.db.models.query import QuerySet
-from django.db.models.signals import pre_save, post_save
+# from django.db.models.query import QuerySet
+from django.db.models.signals import pre_save
 from django.core.files.storage import FileSystemStorage
 from ecommerce.utils import get_filename, unique_slug_generator
 from products.ImageFilename import upload_image_path, upload_product_file_location
 
 
-class ProductQuerySet(QuerySet):
+class ProductQuerySet(models.query.QuerySet):
     def active(self):
         return self.filter(active=True)
 
@@ -31,13 +31,11 @@ class ProductModelManager(models.Manager):
 
     def featured(self):  # Product.objects.featured()
         return self.get_queryset().featured()
-
     def get_by_id(self, id):
         qs = self.get_queryset().filter(id=id)
         if qs.count() == 1:
             return qs.first()
         return None
-
     def search(self, query):
         return self.get_queryset().active().search(query)
 
@@ -99,4 +97,7 @@ class ProductFile(models.Model):
         return og_name
 
     def get_download_url(self):  # detail view
-        return self.file.url
+        return reverse("products:download", kwargs={"slug":self.products.slug, 'pk':self.pk})
+
+    def get_default_url(self):
+        return self.products.get_absolute_url()
