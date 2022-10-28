@@ -7,10 +7,11 @@
             "slug": "t-shirt",
             "description": "Django makes it easier to build better web apps more quickly and with less code.",
             "price": "100.99",
-            "image": "products/3531093245/3531093245.png",
+            "image": "products/3388409419/3388409419.png",
             "featured": true,
             "active": true,
-            "timestamp": "2022-10-05T09:02:19.657Z"
+            "timestamp": "2022-10-05T09:02:19.657Z",
+            "is_digital": false
         }
     },
     {
@@ -21,10 +22,11 @@
             "slug": "visual-mockups",
             "description": "visual mockups.visual mockups.visual mockups.",
             "price": "20.99",
-            "image": "products/3526010742/3526010742.png",
+            "image": "products/3388409419/3388409419.png",
             "featured": true,
             "active": true,
-            "timestamp": "2022-10-08T05:26:03.451Z"
+            "timestamp": "2022-10-08T05:26:03.451Z",
+            "is_digital": false
         }
     },
     {
@@ -35,10 +37,11 @@
             "slug": "learning-a-little-each-day-adds-up",
             "description": "visual mockups.visual mockups.visual mockups.",
             "price": "20.99",
-            "image": "products/3526010742/3526010742.png",
+            "image": "products/3388409419/3388409419.png",
             "featured": true,
             "active": true,
-            "timestamp": "2022-10-08T05:26:03.451Z"
+            "timestamp": "2022-10-08T05:26:03.451Z",
+            "is_digital": false
         }
     },
     {
@@ -49,10 +52,11 @@
             "slug": "who-make-learning",
             "description": "visual mockups.visual mockups.visual mockups.",
             "price": "20.99",
-            "image": "products/3526010742/3526010742.png",
+            "image": "products/3388409419/3388409419.png",
             "featured": true,
             "active": true,
-            "timestamp": "2022-10-08T05:26:03.451Z"
+            "timestamp": "2022-10-08T05:26:03.451Z",
+            "is_digital": false
         }
     },
     {
@@ -63,10 +67,11 @@
             "slug": "visual-mockups",
             "description": "visual mockups.visual mockups.visual mockups.",
             "price": "20.99",
-            "image": "products/3526010742/3526010742.png",
+            "image": "products/3388409419/3388409419.png",
             "featured": true,
             "active": true,
-            "timestamp": "2022-10-08T05:26:03.451Z"
+            "timestamp": "2022-10-08T05:26:03.451Z",
+            "is_digital": false
         }
     },
     {
@@ -77,10 +82,11 @@
             "slug": "visual-mockups",
             "description": "visual mockups.visual mockups.visual mockups.",
             "price": "20.99",
-            "image": "products/3526010742/3526010742.png",
+            "image": "products/3388409419/3388409419.png",
             "featured": true,
             "active": true,
-            "timestamp": "2022-10-08T05:26:03.451Z"
+            "timestamp": "2022-10-08T05:26:03.451Z",
+            "is_digital": false
         }
     },
     {
@@ -91,10 +97,11 @@
             "slug": "visual-mockups",
             "description": "visual mockups.visual mockups.visual mockups.",
             "price": "20.99",
-            "image": "products/3526010742/3526010742.png",
+            "image": "products/3388409419/3388409419.png",
             "featured": true,
             "active": true,
-            "timestamp": "2022-10-08T05:26:03.451Z"
+            "timestamp": "2022-10-08T05:26:03.451Z",
+            "is_digital": false
         }
     }
 ]

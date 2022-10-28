@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import Q
 from django.conf import settings
+
 # from django.db.models.query import QuerySet
 from django.db.models.signals import pre_save
 from django.core.files.storage import FileSystemStorage
@@ -17,7 +18,11 @@ class ProductQuerySet(models.query.QuerySet):
         return self.filter(featured=True, active=True)
 
     def search(self, query):
-        lookups = Q(title__icontains=query) | Q(description__icontains=query) | Q(price__icontains=query) | Q(tag__title__icontains=query)
+        lookups = (
+            Q(title__icontains=query) | 
+            Q(description__icontains=query) | 
+            Q(price__icontains=query) | 
+            Q(tag__title__icontains=query))
         # tshirt, t-shirt, t shirt, red, green, blue,
         return self.filter(lookups).distinct()
 
@@ -31,11 +36,13 @@ class ProductModelManager(models.Manager):
 
     def featured(self):  # Product.objects.featured()
         return self.get_queryset().featured()
+
     def get_by_id(self, id):
         qs = self.get_queryset().filter(id=id)
         if qs.count() == 1:
             return qs.first()
         return None
+
     def search(self, query):
         return self.get_queryset().active().search(query)
 
@@ -72,7 +79,6 @@ class Product(models.Model):
         return qs
 
 
-
 ####################################################### Signals ################################################################
 def product_per_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
@@ -84,21 +90,23 @@ pre_save.connect(product_per_save_receiver, sender=Product)
 
 class ProductFile(models.Model):
     products = models.ForeignKey(Product, on_delete=models.CASCADE)
+    name = models.CharField(max_length=120, null=True, blank=True)
     file = models.FileField(upload_to=upload_product_file_location, storage=FileSystemStorage(location=settings.PROTECTED_ROOT))
     free = models.BooleanField(default=False)  # purchase required
     user_required = models.BooleanField(default=False)  # user doesn't matter
+
     def __str__(self):
         return str(self.file.name)
 
     @property
     def display_name(self):
         og_name = get_filename(self.file.name)
-        # if self.name:
-        #     return self.name
+        if self.name:
+            return self.name
         return og_name
 
     def get_download_url(self):  # detail view
-        return reverse("products:download", kwargs={"slug":self.products.slug, 'pk':self.pk})
+        return reverse("products:download", kwargs={"slug": self.products.slug, "pk": self.pk})
 
     def get_default_url(self):
         return self.products.get_absolute_url()
